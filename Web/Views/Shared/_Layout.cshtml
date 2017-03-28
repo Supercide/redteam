@@ -1,0 +1,91 @@
+﻿@using Web
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>@ViewBag.Title - Supercar Showdown</title>
+  <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+  <meta name="viewport" content="width=device-width" />
+  @Styles.Render("~/Content/site")
+  @RenderSection("styles", false)
+  @{
+    var db = new SupercarModelContext();
+    var userProfile = db.UserProfiles.SingleOrDefault(u => u.Email == User.Identity.Name);
+  }
+</head>
+<body>
+  <header class="navbar-wrapper">
+    <div class="container">
+      <div class="navbar navbar-inverse">
+        <div class="navbar-inner@{if (Request.Url.Host.StartsWith("secure.")){<text> secure</text>}}">
+            <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="brand" href="@Url.Action("Index", "Home", null, "http")">Supercar Showdown</a>
+            <div class="nav-collapse collapse">
+              <ul class="nav">
+                <li><a href="@Url.Action("Leaderboard", "Supercar", null, "http")">Leaderboard</a></li>
+                @if (userProfile != null)
+                {
+                  <li id="account" class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">My account <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                      <form action="@Url.Action("LogOff", "Account", null, "http")" method="post" class="navbar-form"></form>
+                      <li><a href="@Url.Action("ChangePassword", "Account", null, "https")">Change password</a></li>
+                      <li><a href="@Url.Action("UserProfile", "Account", null, "http")">Edit profile</a></li>
+                      <li><a id="logoutForm" href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+                    </ul>
+                  </li>
+          
+                  if (userProfile.IsAdmin != null && userProfile.IsAdmin.Value)
+                  {
+                  <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Admin <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                      <li><a href="@Url.Action("Users", "Secret", null, "http")">Manage users</a></li>
+                    </ul>
+                  </li>
+                  }
+                }
+              </ul>
+              <section class="navbar-form pull-right">
+                @if (userProfile != null)
+                {
+                  <ul class="nav">
+                    <li><a>Hello @userProfile.FirstName!</a></li>
+                  </ul>
+                }
+                else
+                {
+                  <ul class="nav">
+                    <li>@Html.ActionLink("Register", "Register", "Account")</li>
+                    <li>@Html.ActionLink("Log in", "Login", "Account")</li>
+                  </ul>
+                }
+                <form action="@Url.Action("Index", "Search", null, "http")" method="get" class="navbar-search">
+                  <input type="text" class="search-query span2" placeholder="Search" name="searchTerm" id="searchTerm" />
+                </form>
+              </section>
+            </div>
+          </div>
+      </div>
+    </div>
+  </header>
+  @RenderSection("featured", false)
+  <div class="container">
+    <section>
+      @RenderBody()
+    </section>
+    <hr>
+    <footer>
+      <p>&copy; @DateTime.Now.Year - Hack Yourself First</p>
+    </footer>
+  </div>
+  @Scripts.Render("~/bundles/jquery")
+  @Scripts.Render("~/bundles/jqueryval")
+  @Scripts.Render("~/bundles/bootstrap")
+  @RenderSection("scripts", false)
+</body>
+</html>

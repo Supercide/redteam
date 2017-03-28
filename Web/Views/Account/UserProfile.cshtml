@@ -1,0 +1,38 @@
+﻿@model Web.Models.UserProfile
+@{
+  ViewBag.Title = "Profile";
+}
+
+<hgroup>
+  <h1>@ViewBag.Title.</h1>
+</hgroup>
+
+@if (!string.IsNullOrEmpty(ViewBag.StatusMessage))
+{
+  <p class="alert alert-success">@ViewBag.StatusMessage</p>
+}
+
+@using (Html.BeginForm("UserProfile", "Account", FormMethod.Post, new { @class = "form-horizontal" }))
+{
+  @Html.ValidationSummary()
+  <fieldset>
+    <legend>Edit your profile.</legend>
+    <div class="control-group">
+      @Html.LabelFor(m => m.FirstName, new { @class = "control-label" })
+      <div class="controls">
+        @Html.TextBoxFor(m => m.FirstName)
+      </div>
+    </div>
+    <div class="control-group">
+      @Html.LabelFor(m => m.LastName, new { @class = "control-label" })
+      <div class="controls">
+        @Html.TextBoxFor(m => m.LastName)
+      </div>
+    </div>
+    <div class="control-group">
+      <div class="controls">
+        <input type="submit" value="Save" class="btn" />
+      </div>
+    </div>
+  </fieldset>
+}

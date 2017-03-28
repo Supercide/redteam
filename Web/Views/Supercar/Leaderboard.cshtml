@@ -1,0 +1,69 @@
+﻿@using Web.ViewModels
+@model IEnumerable<Leaderboard>
+
+@{
+  ViewBag.Title = "Supercar Leaderboard";
+}
+
+<h2>Who's the greatest of them all?</h2>
+
+<div class="accordion" id="accordion2">
+  <div class="accordion-group">
+    <div class="accordion-heading">
+      <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#orderBy">Sort results</a>
+    </div>
+    <div @if (string.IsNullOrEmpty(Request.QueryString["orderBy"])){<text>class="collapse"</text>} id="orderBy">
+      <div class="btn-group accordion-inner">
+        <button class="btn" onclick="location.href='?orderBy=votes&asc=false'">Votes</button>
+        <button class="btn" onclick="location.href='?orderBy=PowerKw&asc=false'">Power</button>
+        <button class="btn" onclick="location.href='?orderBy=TorqueNm&asc=false'">Torque</button>
+        <button class="btn" onclick="location.href='?orderBy=ZeroToOneHundredKmInSecs&asc=true'">0-100</button>
+        <button class="btn" onclick="location.href='?orderBy=TopSpeedKm&asc=false'">Top Speed</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<table id="results" class="table table-striped table-hover">
+  <thead>
+    <tr>
+      <th></th>
+      <th class="number">Rank</th>
+      <th class="number">Votes</th>
+      <th>Make</th>
+      <th>Model</th>
+      <th class="number">Power (kw)</th>
+      <th class="number">Torque (Nm)</th>
+      <th class="number">0-100 kph</th>
+      <th class="number">Top speed (km/h)</th>
+    </tr>
+  </thead>
+  <tbody>
+    @{var rank = 1;}
+    @foreach (var supercar in Model)
+    {
+      <tr id="@supercar.SupercarId">
+        <td class="supercar-thumbnail">
+          <img src="/Images/Cars/@supercar.SupercarId/thumb.jpg" alt="@Html.DisplayFor(m => supercar.Make) @Html.DisplayFor(m => supercar.Model)"></td>
+        <td class="number">@rank</td>
+        <td class="number">@Html.DisplayFor(m => supercar.Votes)</td>
+        <td>@Html.DisplayFor(m => @supercar.Make)</td>
+        <td>@supercar.Model</td>
+        <td class="number">@Html.DisplayFor(m => supercar.PowerKw)</td>
+        <td class="number">@Html.DisplayFor(m => supercar.TorqueNm)</td>
+        <td class="number">@Html.DisplayFor(m => supercar.ZeroToOneHundredKmInSecs)</td>
+        <td class="number">@Html.DisplayFor(m => supercar.TopSpeedKm)</td>
+      </tr>
+      rank++;
+    }
+  </tbody>
+</table>
+
+@section Scripts {
+  <script>
+    $('#results tr').click(function () {
+      var url = $(this).attr("id");
+      window.location.href = url;
+    });
+  </script>
+}

@@ -1,0 +1,82 @@
+﻿@model Web.Models.LoginModel
+
+@{
+  ViewBag.Title = "Log in";
+}
+
+<hgroup>
+  <h1>@ViewBag.Title.</h1>
+</hgroup>
+
+<section>
+  <form action="@Url.Action("Login", "Account", new { ViewBag.ReturnUrl }, "https")" method="post" class="form-horizontal" id="loginForm">
+    @Html.ValidationSummary(true)
+    <fieldset>
+      <legend>Please provide your email and password.</legend>
+      <div class="control-group">
+        @Html.LabelFor(m => m.Email, new { @class = "control-label" })
+        <div class="controls">
+          @Html.TextBoxFor(m => m.Email)
+          @Html.ValidationMessageFor(m => m.Email)
+        </div>
+      </div>
+      <div class="control-group">
+        @Html.LabelFor(m => m.Password, new { @class = "control-label" })
+        <div class="controls">
+          @Html.PasswordFor(m => m.Password)
+          @Html.ValidationMessageFor(m => m.Password)
+        </div>
+      </div>
+      <div class="control-group">
+        @Html.LabelFor(m => m.RememberMe, new { @class = "control-label" })
+        <div class="controls">
+          @Html.CheckBoxFor(m => m.RememberMe)
+        </div>
+      </div>
+      <div class="control-group">
+        <div class="controls">
+          <input type="submit" value="Log in" class="btn" />
+        </div>
+      </div>
+    </fieldset>
+    <p>
+      @Html.ActionLink("Register", "Register") if you don't have an account.
+    </p>
+    <p>
+      @Html.ActionLink("Forgot your password?", "ResetPassword")
+    </p>
+  </form>
+</section>
+
+<div class="modal hide fade" id="loggingOn">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h3>Logging you back in automatically...</h3>
+  </div>
+  <div class="modal-body">
+    <div class="progress progress-striped active" id="progressBar">
+      <div class="bar" style="width: 100%;"></div>
+    </div>
+  </div>
+</div>
+
+@section Scripts {
+  @Scripts.Render("~/bundles/loginscripts")
+  <script>
+    var email = $.cookie("Email");
+    var password = $.cookie("Password");
+
+    if (email != null && password != null) {
+      var unencodedPassword = $.base64.decode(password);
+
+      $('#loggingOn').modal('show');
+
+      $('#Email').val(email);
+      $('#Password').val(unencodedPassword);
+
+      delay(function () {
+        $('#loginForm').submit();
+      }, 3500);
+    }
+  </script>
+}

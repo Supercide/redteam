@@ -1,0 +1,56 @@
+﻿@using Web.ViewModels
+@model IEnumerable<Search>
+
+@{
+  ViewBag.Title = "Search";
+}
+
+<h2>You searched for &quot;<span id="searchTerm">@Html.Raw(ViewBag.EncodedSearchTerm)</span>&quot;</h2>
+
+@if (!Model.Any())
+{
+  <p class="alert alert-error">No results found for your search</p>
+}
+else
+{
+  <p class="alert alert-success">Found <strong>@Model.Count()</strong> results</p>
+  <table id="results" class="table table-striped table-hover">
+    <thead>
+      <tr>
+        <th></th>
+        <th>Make</th>
+        <th>Model</th>
+        <th class="number">Power (kw)</th>
+        <th class="number">Torque (Nm)</th>
+        <th class="number">0-100 kph</th>
+        <th class="number">Top speed (km/h)</th>
+      </tr>
+    </thead>
+    <tbody>
+      @foreach (var supercar in Model)
+      {
+        <tr id="@supercar.SupercarId">
+          <td class="supercar-thumbnail">
+            <img src="/Images/Cars/@supercar.SupercarId/thumb.jpg" alt="@Html.DisplayFor(m => supercar.Make) @Html.DisplayFor(m => supercar.Model)"></td>
+          <td>@Html.DisplayFor(m => @supercar.Make)</td>
+          <td>@supercar.Model</td>
+          <td class="number">@Html.DisplayFor(m => supercar.PowerKw)</td>
+          <td class="number">@Html.DisplayFor(m => supercar.TorqueNm)</td>
+          <td class="number">@Html.DisplayFor(m => supercar.ZeroToOneHundredKmInSecs)</td>
+          <td class="number">@Html.DisplayFor(m => supercar.TopSpeedKm)</td>
+        </tr>
+      }
+    </tbody>
+  </table>
+}
+
+@section Scripts {
+  <script>
+    $('#results tr').click(function () {
+      var url = '/Supercar/' + $(this).attr("id");
+      window.location.href = url;
+    });
+
+    $('#searchTerm').val('@Html.Raw(ViewBag.RawSearchTerm)');
+  </script>
+}

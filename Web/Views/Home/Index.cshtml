@@ -1,0 +1,72 @@
+﻿@using Web.ViewModels
+@model HomePage
+@{
+  ViewBag.Title = "Supercar Showdown";
+}
+
+@section styles {
+  <style type="text/css">
+    body
+    {
+      padding-top: 0;
+    }
+  </style>
+}
+
+@section featured {
+  <div id="myCarousel" class="carousel slide">
+    <div class="carousel-inner">
+      @foreach (var topCar in Model.TopCars)
+      {
+        <div class="item" style="background-image: url('/Images/Cars/@(topCar.SupercarId)/Banner.jpg');">
+          <div class="container">
+            <div class="carousel-caption">
+              <h1>@topCar.Make @topCar.Model</h1>
+              <p class="lead">@topCar.Description</p>
+              @Html.ActionLink("View the " + topCar.Model, "Index", "Supercar", new { id = topCar.SupercarId }, new { @class = "btn btn-large btn-primary" })
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+    <a class="left carousel-control" href="#myCarousel" data-slide="prev">&lsaquo;</a>
+    <a class="right carousel-control" href="#myCarousel" data-slide="next">&rsaquo;</a>
+  </div>
+}
+
+<div class="hero-unit">
+  <h2>Top manufacturers</h2>
+  <p>Who's the best of the best</p>
+</div>
+
+<div class="row marketing">
+  @foreach (var topMake in Model.TopMakes)
+  {
+    <div class="span4">
+      <div class="thumbnail">
+        <div class="thumbnail-container">
+          <img src="Images/Makes/@(topMake.MakeId).png" alt="@topMake.Name"/>
+        </div>
+        <div class="caption">
+          <h3>@topMake.Name: @Html.DisplayFor(m => topMake.Votes) votes</h3>
+          <p>There @(topMake.Supercars == 1 ? "is" : "are") presently @Html.DisplayFor(m => topMake.Supercars) @(topMake.Name + (topMake.Supercars == 1 ? "" : "s")) you can vote for</p>
+          <p>
+            @Html.ActionLink(string.Format("View {0}s", topMake.Name), "Index", "Make", new { id = topMake.MakeId }, new { @class = "btn btn-primary" })
+          </p>
+        </div>
+      </div>
+    </div>
+  }
+</div>
+
+@section Scripts {
+  @Scripts.Render("~/bundles/bootstrap-carousel")
+  <script type="text/javascript">
+    !function ($) {
+      $(function () {
+        $('.carousel-inner div:first-child').addClass('active');
+        $('#myCarousel').carousel();
+      })
+    }(window.jQuery)
+  </script>
+}
