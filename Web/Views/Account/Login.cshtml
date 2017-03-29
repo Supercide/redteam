@@ -24,7 +24,7 @@
             <div class="control-group">
                 @Html.LabelFor(m => m.Password, new {@class = "control-label"})
                 <div class="controls">
-                    @Html.PasswordFor(m => m.Password)
+                    @Html.PasswordFor(m => m.Password, new { autocomplete = "off" })
                     @Html.ValidationMessageFor(m => m.Password)
                 </div>
             </div>
