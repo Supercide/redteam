@@ -32,7 +32,7 @@
                   <li id="account" class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">My account <b class="caret"></b></a>
                     <ul class="dropdown-menu">
-                      <form action="@Url.Action("LogOff", "Account", null, "https")" method="post" class="navbar-form"></form>
+                      <form action="@Url.Action("LogOff", "Account", null, "https")" method="post" class="navbar-form">@Html.AntiForgeryToken()</form>
                       <li><a href="@Url.Action("ChangePassword", "Account", null, "https")">Change password</a></li>
                       <li><a href="@Url.Action("UserProfile", "Account", null, "https")">Edit profile</a></li>
                       <li><a id="logoutForm" href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
@@ -64,9 +64,10 @@
                     <li>@Html.ActionLink("Log in", "Login", "Account")</li>
                   </ul>
                 }
-                <form action="@Url.Action("Index", "Search", null, "https")" method="get" class="navbar-search">
-                  <input type="text" class="search-query span2" placeholder="Search" name="searchTerm" id="searchTerm" />
-                </form>
+                  <form action="@Url.Action("Index", "Search", null, "https")" method="get" class="navbar-search">
+                      @Html.AntiForgeryToken()
+                      <input type="text" class="search-query span2" placeholder="Search" name="searchTerm" id="searchTerm"/>
+                  </form>
               </section>
             </div>
           </div>
