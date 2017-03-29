@@ -9,7 +9,7 @@
 </hgroup>
 
 <section>
-    <form action="@Url.Action("Login", "Account", new {ViewBag.ReturnUrl}, "https")" method="post" class="form-horizontal" id="loginForm">
+    <form action="@Url.Action("Login", "Account", new {ViewBag.ReturnUrl}, "https")" method="post" class="form-horizontal" id="loginForm" autocomplete="off">
         @Html.AntiForgeryToken()
         @Html.ValidationSummary(true)
         <fieldset>

@@ -7,7 +7,7 @@
   <h1>@ViewBag.Title.</h1>
 </hgroup>
 
-<form action="@Url.Action("Register", "Account", new {ViewBag.ReturnUrl}, "https")" method="post" class="form-horizontal">
+<form action="@Url.Action("Register", "Account", new {ViewBag.ReturnUrl}, "https")" method="post" class="form-horizontal" autocomplete="off">
     @Html.AntiForgeryToken()
     @Html.ValidationSummary()
     <fieldset>
