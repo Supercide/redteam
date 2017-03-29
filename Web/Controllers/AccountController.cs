@@ -33,23 +33,8 @@ namespace Web.Controllers
     [AllowAnonymous]
     public ActionResult Login(LoginModel model, string returnUrl)
     {
-      if (ModelState.IsValid && WebSecurity.Login(model.Email, model.Password, true))
+      if (ModelState.IsValid && WebSecurity.Login(model.Email, model.Password, model.RememberMe))
       {
-
-        if (model.RememberMe)
-        {
-          var bytesToEncode = Encoding.UTF8.GetBytes(model.Password);
-          var encodedPassword = Convert.ToBase64String(bytesToEncode);
-
-          Response.Cookies.Add(new HttpCookie("Password", encodedPassword) {Expires = DateTime.Now.AddYears(1)});
-          Response.Cookies.Add(new HttpCookie("Email", model.Email) {Expires = DateTime.Now.AddYears(1)});
-        }
-        else
-        {
-          Response.Cookies.Remove("Password");
-          Response.Cookies.Remove("Email");
-        }
-
         return RedirectToLocal(returnUrl);
       }
 
