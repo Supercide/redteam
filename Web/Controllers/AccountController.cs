@@ -78,7 +78,7 @@ namespace Web.Controllers
     // POST: /Account/Register
     [HttpPost]
     [AllowAnonymous]
-    [ValidateInput(false)]
+    [ValidateInput(true)]
     public ActionResult Register(RegisterModel model)
     {
       if (ModelState.IsValid)
@@ -263,11 +263,11 @@ namespace Web.Controllers
     {
       if (Url.IsLocalUrl(returnUrl))
       {
-        return Redirect(string.Format("http://{0}{1}", Request.Url.Host, returnUrl));
+        return Redirect(string.Format("https://{0}{1}", Request.Url.Host, returnUrl));
       }
       else
       {
-        return Redirect(Url.Action("Index", "Home", null, "http"));
+        return Redirect(Url.Action("Index", "Home", null, "https"));
       }
     }
 
