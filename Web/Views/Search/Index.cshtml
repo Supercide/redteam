@@ -5,7 +5,7 @@
   ViewBag.Title = "Search";
 }
 
-<h2>You searched for &quot;<span id="searchTerm">@Html.Raw(ViewBag.EncodedSearchTerm)</span>&quot;</h2>
+<h2>You searched for &quot;<span id="searchTerm">@ViewBag.EncodedSearchTerm</span>&quot;</h2>
 
 @if (!Model.Any())
 {
@@ -51,6 +51,6 @@ else
       window.location.href = url;
     });
 
-    $('#searchTerm').val('@Html.Raw(ViewBag.RawSearchTerm)');
+    $('#searchTerm').val('@ViewBag.RawSearchTerm');
   </script>
 }
