@@ -7,21 +7,23 @@ using System.Web.Routing;
 
 namespace Web
 {
-  public class MvcApplication : HttpApplication
-  {
-    protected void Application_Start()
+    public class MvcApplication : HttpApplication
     {
-      AreaRegistration.RegisterAllAreas();
+        protected void Application_Start()
+        {
+            AreaRegistration.RegisterAllAreas();
 
-      WebApiConfig.Register(GlobalConfiguration.Configuration);
-      FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
-      RouteConfig.RegisterRoutes(RouteTable.Routes);
-      BundleConfig.RegisterBundles(BundleTable.Bundles);
-    }
+            WebApiConfig.Register(GlobalConfiguration.Configuration);
+            FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
+            RouteConfig.RegisterRoutes(RouteTable.Routes);
+            BundleConfig.RegisterBundles(BundleTable.Bundles);
 
-    protected void Session_Start(Object sender, EventArgs e)
-    {
-      HttpContext.Current.Response.Cookies.Add(new HttpCookie("VisitStart", DateTime.UtcNow.ToString()));
+            MvcHandler.DisableMvcResponseHeader = true;
+        }
+
+        protected void Session_Start(Object sender, EventArgs e)
+        {
+            HttpContext.Current.Response.Cookies.Add(new HttpCookie("VisitStart", DateTime.UtcNow.ToString()));
+        }
     }
-  }
 }
