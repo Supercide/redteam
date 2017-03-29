@@ -6,3 +6,9 @@
 /Web/bin
 /Web/obj/Debug
 /Web/Properties/PublishProfiles
+<<<<<<< HEAD
+=======
+/.vs/HackYourselfFirst/v14
+/.vs/config
+/Web/Web.csproj.user
+>>>>>>> c93cdadda8dab0106486de96ece2de278ce7346a
