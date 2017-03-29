@@ -9,43 +9,44 @@
 </hgroup>
 
 <section>
-  <form action="@Url.Action("Login", "Account", new { ViewBag.ReturnUrl }, "https")" method="post" class="form-horizontal" id="loginForm">
-    @Html.ValidationSummary(true)
-    <fieldset>
-      <legend>Please provide your email and password.</legend>
-      <div class="control-group">
-        @Html.LabelFor(m => m.Email, new { @class = "control-label" })
-        <div class="controls">
-          @Html.TextBoxFor(m => m.Email)
-          @Html.ValidationMessageFor(m => m.Email)
-        </div>
-      </div>
-      <div class="control-group">
-        @Html.LabelFor(m => m.Password, new { @class = "control-label" })
-        <div class="controls">
-          @Html.PasswordFor(m => m.Password)
-          @Html.ValidationMessageFor(m => m.Password)
-        </div>
-      </div>
-      <div class="control-group">
-        @Html.LabelFor(m => m.RememberMe, new { @class = "control-label" })
-        <div class="controls">
-          @Html.CheckBoxFor(m => m.RememberMe)
-        </div>
-      </div>
-      <div class="control-group">
-        <div class="controls">
-          <input type="submit" value="Log in" class="btn" />
-        </div>
-      </div>
-    </fieldset>
-    <p>
-      @Html.ActionLink("Register", "Register") if you don't have an account.
-    </p>
-    <p>
-      @Html.ActionLink("Forgot your password?", "ResetPassword")
-    </p>
-  </form>
+    <form action="@Url.Action("Login", "Account", new {ViewBag.ReturnUrl}, "https")" method="post" class="form-horizontal" id="loginForm">
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)
+        <fieldset>
+            <legend>Please provide your email and password.</legend>
+            <div class="control-group">
+                @Html.LabelFor(m => m.Email, new {@class = "control-label"})
+                <div class="controls">
+                    @Html.TextBoxFor(m => m.Email)
+                    @Html.ValidationMessageFor(m => m.Email)
+                </div>
+            </div>
+            <div class="control-group">
+                @Html.LabelFor(m => m.Password, new {@class = "control-label"})
+                <div class="controls">
+                    @Html.PasswordFor(m => m.Password)
+                    @Html.ValidationMessageFor(m => m.Password)
+                </div>
+            </div>
+            <div class="control-group">
+                @Html.LabelFor(m => m.RememberMe, new {@class = "control-label"})
+                <div class="controls">
+                    @Html.CheckBoxFor(m => m.RememberMe)
+                </div>
+            </div>
+            <div class="control-group">
+                <div class="controls">
+                    <input type="submit" value="Log in" class="btn"/>
+                </div>
+            </div>
+        </fieldset>
+        <p>
+            @Html.ActionLink("Register", "Register") if you don't have an account.
+        </p>
+        <p>
+            @Html.ActionLink("Forgot your password?", "ResetPassword")
+        </p>
+    </form>
 </section>
 
 <div class="modal hide fade" id="loggingOn">
