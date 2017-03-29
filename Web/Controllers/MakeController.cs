@@ -9,7 +9,7 @@ namespace Web.Controllers
 
     //
     // GET: /Make/
-    [ValidateInput(false)]
+    [ValidateInput(true)]
     public ActionResult Index(int id, string orderBy = "SupercarId")
     {
       var make = db.Makes.Single(m => m.MakeId == id);
