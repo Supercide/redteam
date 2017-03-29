@@ -25,8 +25,15 @@ namespace Web.Controllers
     // GET: /Secret/Users
     public ActionResult Users()
     {
-      var users = db.UserProfiles;
-      return View(users);
+        if (User.Identity.IsAuthenticated && db.UserProfiles.Any(u => u.Email == User.Identity.Name && u.IsAdmin != null && u.IsAdmin.Value))
+        {
+            var users = db.UserProfiles;
+            return View(users);
+        }
+        else
+        {
+            return View("AccessDenied");
+        }
     }
   }
 }
