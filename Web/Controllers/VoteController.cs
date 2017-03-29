@@ -1,4 +1,5 @@
 ﻿using System.Data.SqlClient;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Configuration;
@@ -7,27 +8,26 @@ using Web.Models;
 
 namespace Web.Controllers
 {
-  public class VoteController : ApiController
-  {
-    // POST api/Vote
-    public HttpResponseMessage Post([FromBody]Vote vote)
+    public class VoteController : ApiController
     {
-      if (!User.Identity.IsAuthenticated)
-      {
-        return Request.CreateResponse(HttpStatusCode.Forbidden);
-      }
+        private SupercarModelContext db = new SupercarModelContext();
 
-      var connString = WebConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
-      var sqlString = "INSERT INTO Vote(UserId, SupercarId, Comments) VALUES (" + vote.UserId + ", " + vote.SupercarId + ", '" + vote.Comments + "')";
+        // POST api/Vote
+        public HttpResponseMessage Post([FromBody] Vote vote)
+        {
+            if (!User.Identity.IsAuthenticated)
+            {
+                return Request.CreateResponse(HttpStatusCode.Forbidden);
+            }
 
-      using (var conn = new SqlConnection(connString))
-      {
-        var command = new SqlCommand(sqlString, conn);
-        command.Connection.Open();
-        command.ExecuteNonQuery();
-      }
+            var user = db.UserProfiles.First(u => u.Email == User.Identity.Name);
+            vote.UserId = user.UserId;
 
-      return Request.CreateResponse(HttpStatusCode.Created);
+            db.Votes.Add(vote);
+
+            db.SaveChanges();
+
+            return Request.CreateResponse(HttpStatusCode.Created);
+        }
     }
-  }
 }
