@@ -120,8 +120,8 @@
             @foreach (var vote in Model.Votes.Where(v => !string.IsNullOrEmpty(v.Comments)))
             {
               <tr>
-                <td>@Html.Raw(vote.User.FirstName) @Html.Raw(vote.User.LastName)</td>
-                <td>@Html.Raw(vote.Comments)</td>
+                <td>@vote.User.FirstName @vote.User.LastName</td>
+                <td>@vote.Comments</td>
               </tr>
               rank++;
             }
