@@ -35,9 +35,6 @@ namespace Web.Controllers
     {
       if (ModelState.IsValid && WebSecurity.Login(model.Email, model.Password, true))
       {
-        // Change the auth cookie to remove the HttpOnly attribute
-        var authCookieName = FormsAuthentication.FormsCookieName;
-        Response.Cookies[authCookieName].HttpOnly = false;
 
         if (model.RememberMe)
         {
