@@ -14,7 +14,7 @@ namespace Web.Modules
 
     private void OnBeginRequest(Object sender, EventArgs e)
     {
-      HttpContext.Current.Response.AddHeader("X-XSS-Protection", "0");
+      //HttpContext.Current.Response.AddHeader("X-XSS-Protection", "0");
     }
   }
 }
