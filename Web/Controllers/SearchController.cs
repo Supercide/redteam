@@ -11,7 +11,7 @@ namespace Web.Controllers
 
     //
     // GET: /Search
-    [ValidateInput(false)]
+    [ValidateInput(true)]
     public ActionResult Index(string searchTerm)
     {
       // Reading from query string to demonstrate HTTP verb tampering

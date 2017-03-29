@@ -81,7 +81,7 @@ namespace Web.Controllers
     // POST: /Account/Register
     [HttpPost]
     [AllowAnonymous]
-    [ValidateInput(false)]
+    [ValidateInput(true)]
     public ActionResult Register(RegisterModel model)
     {
       if (ModelState.IsValid)
